@@ -97,15 +97,22 @@ def get_paths_and_transform(split, args):
             def get_rgb_paths(p):
                 return p.replace("groundtruth_depth", "image")
     elif split == "test_completion":
-        transform = no_transform
+        print(args.data_folder)
+        transform = val_transform
         glob_d = os.path.join(
-            args.data_folder,
-            "data_depth_selection/test_depth_completion_anonymous/velodyne_raw/*.png"
+            args.data_folder,"/home/bipasha/Documents/PENet_ICRA2021/data/dataset/kitti_depth/depth/data_depth_selection/train/2011_09_26/proj_depth/groundtruth/image_03/*.png"
         )
-        glob_gt = None  # "test_depth_completion_anonymous/"
+        glob_gt = None
+        #os.path.join(
+        #   args.data_folder,
+        #   "/home/bipasha/Documents/PENet_ICRA2021/data/dataset/kitti_depth/depth/data_depth_selection/train/data/*.png")
+        #None  # "test_depth_completion_anonymous/"
         glob_rgb = os.path.join(
             args.data_folder,
-            "data_depth_selection/test_depth_completion_anonymous/image/*.png")
+            "/home/bipasha/Documents/PENet_ICRA2021/data/dataset/kitti_depth/depth/data_depth_selection/train/data/*.png")
+        print(glob_d)
+        print(glob_gt)
+        print(glob_rgb)
     elif split == "test_prediction":
         transform = no_transform
         glob_d = None
@@ -123,6 +130,7 @@ def get_paths_and_transform(split, args):
         paths_rgb = [get_rgb_paths(p) for p in paths_gt]
     else:
         # test only has d or rgb
+        print("We here")
         paths_rgb = sorted(glob.glob(glob_rgb))
         paths_gt = [None] * len(paths_rgb)
         if split == "test_prediction":
